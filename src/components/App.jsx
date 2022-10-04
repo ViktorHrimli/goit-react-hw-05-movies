@@ -88,19 +88,6 @@ export const App = () => {
           element={<Home movie={movie} onClick={handleClickIdMovies} />}
         />
         <Route
-          path="/:MovieDetails"
-          element={
-            <MovieDetails
-              movie={dataMovie}
-              dispatch={dispatch}
-              onClick={handleClickIdMovies}
-            />
-          }
-        >
-          <Route path="cast" element={<Cast castData={castRewie} />} />
-          <Route path="reviews" element={<Reviews reviewsData={castRewie} />} />
-        </Route>
-        <Route
           path="/Movies"
           element={
             <Movies
@@ -111,7 +98,7 @@ export const App = () => {
           }
         />
         <Route
-          path="Movies/:MovieDetails"
+          path="Movies/:id"
           element={
             <MovieDetails
               dispatch={dispatch}
@@ -123,7 +110,6 @@ export const App = () => {
           <Route path="cast" element={<Cast castData={castRewie} />} />
           <Route path="reviews" element={<Reviews reviewsData={castRewie} />} />
         </Route>
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>

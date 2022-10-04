@@ -19,6 +19,7 @@ export const MovieDetails = ({
     <>
       <Box mr="auto">
         <LinksRouter to="/Movies">Back</LinksRouter>
+        <LinksRouter to="/">Home</LinksRouter>
       </Box>
       <Box
         as="main"

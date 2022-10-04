@@ -16,7 +16,7 @@ export const Home = ({ movie, onClick }) => {
         <HomeRenderList>
           {movie.map(({ id, original_title, poster_path }) => (
             <HomeItemCard key={id}>
-              <Link onClick={() => onClick(id)} to="MovieDetails">
+              <Link onClick={() => onClick(id)} to={`Movies/${id}`}>
                 <img
                   src={
                     `https://image.tmdb.org/t/p/w400${poster_path}` || urlPage
