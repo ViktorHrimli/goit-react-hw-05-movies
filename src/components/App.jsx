@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { useEffect, useReducer, useState } from 'react';
-import { Box, LinksRouter } from 'CommonStyle/Common.styled';
-import { ListLinkStyled } from 'App.styled';
+import { Box } from 'CommonStyle/Common.styled';
 import { Home } from './Pages/Home';
 import { Movies } from './Pages/Movies';
 import { NotFound } from './Pages/NotFound';
@@ -30,6 +29,7 @@ export const App = () => {
   const [movie, setMovie] = useState([]);
   const [movieDatails, setMovieDateils] = useState(null);
   const [query, setQuery] = useState(null);
+  const [serchMovie, setSerchMovie] = useState([]);
   const [dataMovie, setDataMovie] = useState([]);
   const [castRewie, setCastRewie] = useState([]);
   const [{ page, id }, dispatch] = useReducer(CastReviewReducer, {
@@ -43,7 +43,9 @@ export const App = () => {
       setMovie(results);
     });
 
-    return () => {};
+    return () => {
+      setMovie([]);
+    };
   }, []);
 
   useEffect(() => {
@@ -64,7 +66,7 @@ export const App = () => {
   useEffect(() => {
     if (!query) return;
     ApiServiceSerchMovie(query).then(({ data: results }) => {
-      setMovie(results);
+      setSerchMovie(results);
     });
   }, [query]);
   const handleClickIdMovies = e => {
@@ -80,17 +82,13 @@ export const App = () => {
       px={5}
       gridGap={4}
     >
-      <ListLinkStyled>
-        <LinksRouter to="/">Home</LinksRouter>
-        <LinksRouter to="/Movies">Movies</LinksRouter>
-      </ListLinkStyled>
       <Routes>
         <Route
           path="/"
           element={<Home movie={movie} onClick={handleClickIdMovies} />}
         />
         <Route
-          path="/:moviesId"
+          path="/:MovieDetails"
           element={
             <MovieDetails
               movie={dataMovie}
@@ -104,16 +102,28 @@ export const App = () => {
         </Route>
         <Route
           path="/Movies"
-          element={<Movies query={setQuery} movie={movie} />}
+          element={
+            <Movies
+              onClick={handleClickIdMovies}
+              query={setQuery}
+              movie={serchMovie}
+            />
+          }
+        />
+        <Route
+          path="Movies/:MovieDetails"
+          element={
+            <MovieDetails
+              dispatch={dispatch}
+              onClick={handleClickIdMovies}
+              movie={dataMovie}
+            />
+          }
         >
-          <Route
-            path="Movies/:moviesId"
-            element={<MovieDetails movie={dataMovie} />}
-          >
-            <Route path="cast" element={<Cast />} />
-            <Route path="reviews" element={<Reviews />} />
-          </Route>
+          <Route path="cast" element={<Cast castData={castRewie} />} />
+          <Route path="reviews" element={<Reviews reviewsData={castRewie} />} />
         </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Box>
