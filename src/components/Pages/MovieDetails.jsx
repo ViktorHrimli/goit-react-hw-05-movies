@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import { Box, LinksRouter } from 'CommonStyle/Common.styled';
+import { Box, LinksRouter, LinksRouterBack } from 'CommonStyle/Common.styled';
 import { ListMoviesDetails, ItemMovies } from './MovieDetails.styled';
 const urlPage =
   'https://netsh.pp.ua/wp-content/uploads/2017/08/Placeholder-1.png';
@@ -17,9 +17,9 @@ export const MovieDetails = ({
 }) => {
   return (
     <>
-      <Box mr="auto">
-        <LinksRouter to="/Movies">Back</LinksRouter>
-        <LinksRouter to="/">Home</LinksRouter>
+      <Box mr="auto" display="flex" gridGap="20px">
+        <LinksRouterBack to="/Movies">Back</LinksRouterBack>
+        <LinksRouterBack to="/">Home</LinksRouterBack>
       </Box>
       <Box
         as="main"

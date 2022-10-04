@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { theme } from 'Thema';
 
@@ -54,7 +54,7 @@ ul, li {
   margin: 0;
 }
 `;
-export const LinksRouter = styled(Link)`
+export const LinksRouter = styled(NavLink)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -66,8 +66,40 @@ export const LinksRouter = styled(Link)`
   border: ${p => p.theme.borders.normal};
   border-radius: ${p => p.theme.radii.md};
   color: ${p => p.theme.colors.white};
-  background-color: ${p => p.theme.colors.accent};
+  background-color: ${p => p.theme.colors.black};
+
   transition: border 250ms, box-shadow 250ms, scale 250ms;
+  &.active {
+    background-color: ${p => p.theme.colors.accent};
+  }
+
+  :hover,
+  :focus {
+    cursor: pointer;
+    border: ${p => p.theme.borders.normal} ${p => p.theme.colors.accent};
+    box-shadow: 2px 2px 3px #00bfff;
+    scale: 1.1;
+  }
+`;
+
+export const LinksRouterBack = styled(NavLink)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  font-family: ${p => p.theme.fonts.monospace};
+  font-size: ${p => p.theme.fontSizes.m};
+  padding: ${p => p.theme.space[2]}px;
+  outline: none;
+  border: ${p => p.theme.borders.normal};
+  border-radius: ${p => p.theme.radii.md};
+  color: ${p => p.theme.colors.white};
+  background-color: ${p => p.theme.colors.black};
+
+  transition: border 250ms, box-shadow 250ms, scale 250ms;
+  &.active {
+    background-color: ${p => p.theme.colors.black};
+  }
 
   :hover,
   :focus {

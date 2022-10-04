@@ -6,7 +6,7 @@ export const Reviews = ({ reviewsData: { results } }) => {
     <>
       {!results || results.length === 0 ? (
         <Box display="flex" color="black">
-          <h2>Sorry noithing find</h2>
+          <h2>Sorry, nothing was found (:</h2>
         </Box>
       ) : (
         <Box>

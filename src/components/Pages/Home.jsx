@@ -9,6 +9,7 @@ export const Home = ({ movie, onClick }) => {
     <Box as="main" display="flex" flexDirection="column" gridGap="20px">
       <Box ml="auto">
         <ListLinkStyled>
+          <LinksRouter to="/">Home</LinksRouter>
           <LinksRouter to="/Movies">Movies</LinksRouter>
         </ListLinkStyled>
       </Box>

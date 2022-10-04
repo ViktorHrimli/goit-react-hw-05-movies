@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Box, LinksRouter } from 'CommonStyle/Common.styled';
+import { Box, LinksRouterBack } from 'CommonStyle/Common.styled';
 import { Input, MoviesItemCard, MoviesRenderList } from './Movies.styled';
 
 export const Movies = ({ query, movie: { results }, onClick }) => {
@@ -18,7 +18,7 @@ export const Movies = ({ query, movie: { results }, onClick }) => {
         alignItems="flex-start"
         mr="auto"
       >
-        <LinksRouter to="/">Back</LinksRouter>
+        <LinksRouterBack to="/">Back</LinksRouterBack>
       </Box>
       <Box
         as="main"
