@@ -1,10 +1,25 @@
-import { Outlet } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { ApiServiseMovieDetails } from '../Api/ServiceApi';
 import { Box, LinksRouter, LinksRouterBack } from 'CommonStyle/Common.styled';
 import { ListMoviesDetails, ItemMovies } from './MovieDetails.styled';
-const urlPage =
-  'https://netsh.pp.ua/wp-content/uploads/2017/08/Placeholder-1.png';
-export const MovieDetails = ({
-  movie: {
+
+const IMG = 'https://dummyimage.com/300x450/000/0011ff&text=Not+find+photo';
+
+export default function MovieDetails({ idMovie, dispatch }) {
+  const [dataMovie, setDataMovie] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!idMovie) return;
+    ApiServiseMovieDetails(idMovie).then(({ data }) => {
+      setDataMovie(data);
+    });
+    return () => {};
+  }, [idMovie]);
+
+  const {
     original_title,
     original_language,
     poster_path,
@@ -12,13 +27,14 @@ export const MovieDetails = ({
     overview,
     homepage,
     id,
-  },
-  dispatch,
-}) => {
+  } = dataMovie;
+
   return (
     <>
       <Box mr="auto" display="flex" gridGap="20px">
-        <LinksRouterBack to="/Movies">Back</LinksRouterBack>
+        <LinksRouterBack to={location.state?.from ?? '/Movies'}>
+          Back
+        </LinksRouterBack>
         <LinksRouterBack to="/">Home</LinksRouterBack>
       </Box>
       <Box
@@ -32,7 +48,11 @@ export const MovieDetails = ({
           <Box color="black">
             <h2>{original_title}</h2>
             <img
-              src={`https://image.tmdb.org/t/p/w300${poster_path}` || urlPage}
+              src={
+                !poster_path
+                  ? IMG
+                  : `https://image.tmdb.org/t/p/w300${poster_path}`
+              }
               alt={original_title}
             />
           </Box>
@@ -59,12 +79,14 @@ export const MovieDetails = ({
                 <LinksRouter
                   onClick={() => dispatch({ type: 'credits', payload: id })}
                   to="cast"
+                  state={{ from: location }}
                 >
                   Cast
                 </LinksRouter>
                 <LinksRouter
                   onClick={() => dispatch({ type: 'reviews', payload: id })}
                   to="reviews"
+                  state={{ from: location }}
                 >
                   Reviews
                 </LinksRouter>
@@ -72,9 +94,13 @@ export const MovieDetails = ({
             </ItemMovies>
           </ListMoviesDetails>
         </Box>
-
         <Outlet />
       </Box>
     </>
   );
+}
+
+MovieDetails.propTypes = {
+  idMovie: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };

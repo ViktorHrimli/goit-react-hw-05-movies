@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Box } from 'CommonStyle/Common.styled';
+import { ApiServiseCastMovie } from '../Api/ServiceApi';
+const IMG = 'https://dummyimage.com/200x300/000/0011ff&text=Not+find+photo';
 
-export const Cast = ({ castData: { cast } }) => {
+export default function Cast({ page, id }) {
+  const [castMovie, setcastMovie] = useState([]);
+
+  useEffect(() => {
+    if (!id) return;
+    ApiServiseCastMovie(page, id).then(({ data }) => {
+      setcastMovie(data);
+    });
+  }, [id, page]);
+  const { cast } = castMovie;
+
   if (!cast) return;
   const castLength = cast.slice(0, 12);
-  const urlPage =
-    'https://netsh.pp.ua/wp-content/uploads/2017/08/Placeholder-1.png';
   return (
     <>
       {!cast || cast.length === 0 ? (
@@ -31,8 +43,9 @@ export const Cast = ({ castData: { cast } }) => {
                   >
                     <img
                       src={
-                        `https://image.tmdb.org/t/p/w200${profile_path}` ||
-                        urlPage
+                        !profile_path
+                          ? IMG
+                          : `https://image.tmdb.org/t/p/w200${profile_path}`
                       }
                       alt={name}
                     />
@@ -48,4 +61,9 @@ export const Cast = ({ castData: { cast } }) => {
       )}
     </>
   );
+}
+
+Cast.propTypes = {
+  page: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };

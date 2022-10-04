@@ -31,7 +31,6 @@ export const ApiServiseCastMovie = async (page, id) => {
   return await axios
     .get(`${URL}movie/${id}/${page}?api_key=${KEY}&language=en-US&page=1`)
     .then(res => {
-      console.log(res);
       return res;
     })
     .catch(error => {

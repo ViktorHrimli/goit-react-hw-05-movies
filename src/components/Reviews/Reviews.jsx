@@ -1,7 +1,18 @@
+import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
+import { ApiServiseCastMovie } from '../Api/ServiceApi';
 import { Box } from 'CommonStyle/Common.styled';
 
-export const Reviews = ({ reviewsData: { results } }) => {
-  console.log(results);
+export default function Reviews({ page, id }) {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    if (!id) return;
+    ApiServiseCastMovie(page, id).then(({ data }) => {
+      setReviews(data);
+    });
+  }, [id, page]);
+  const { results } = reviews;
   return (
     <>
       {!results || results.length === 0 ? (
@@ -30,4 +41,9 @@ export const Reviews = ({ reviewsData: { results } }) => {
       )}
     </>
   );
+}
+
+Reviews.propTypes = {
+  page: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
