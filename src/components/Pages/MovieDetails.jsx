@@ -16,59 +16,64 @@ export const MovieDetails = ({
   dispatch,
 }) => {
   return (
-    <Box
-      as="main"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      gridGap={20}
-    >
-      <Box px={100} py={0} display="flex" alignItems="center" gridGap={20}>
-        <Box color="black">
-          <h2>{original_title}</h2>
-          <img
-            src={`https://image.tmdb.org/t/p/w300${poster_path}` || urlPage}
-            alt={original_title}
-          />
-        </Box>
-        <ListMoviesDetails>
-          <ItemMovies>
-            <p>Language: {original_language}</p>
-          </ItemMovies>
-          <ItemMovies>
-            <p>Ralease: {release_date}</p>
-          </ItemMovies>
-          <ItemMovies>
-            <p>Homepage: {homepage}</p>
-          </ItemMovies>
-          <ItemMovies>
-            <p>Overview: {overview}</p>
-          </ItemMovies>
-          <ItemMovies>
-            <Box
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              gridGap={20}
-            >
-              <LinksRouter
-                onClick={() => dispatch({ type: 'credits', payload: id })}
-                to="cast"
-              >
-                Cast
-              </LinksRouter>
-              <LinksRouter
-                onClick={() => dispatch({ type: 'reviews', payload: id })}
-                to="reviews"
-              >
-                Reviews
-              </LinksRouter>
-            </Box>
-          </ItemMovies>
-        </ListMoviesDetails>
+    <>
+      <Box mr="auto">
+        <LinksRouter to="/Movies">Back</LinksRouter>
       </Box>
+      <Box
+        as="main"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        gridGap={20}
+      >
+        <Box px={100} py={0} display="flex" alignItems="center" gridGap={20}>
+          <Box color="black">
+            <h2>{original_title}</h2>
+            <img
+              src={`https://image.tmdb.org/t/p/w300${poster_path}` || urlPage}
+              alt={original_title}
+            />
+          </Box>
+          <ListMoviesDetails>
+            <ItemMovies>
+              <p>Language: {original_language}</p>
+            </ItemMovies>
+            <ItemMovies>
+              <p>Ralease: {release_date}</p>
+            </ItemMovies>
+            <ItemMovies>
+              <p>Homepage: {homepage}</p>
+            </ItemMovies>
+            <ItemMovies>
+              <p>Overview: {overview}</p>
+            </ItemMovies>
+            <ItemMovies>
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                gridGap={20}
+              >
+                <LinksRouter
+                  onClick={() => dispatch({ type: 'credits', payload: id })}
+                  to="cast"
+                >
+                  Cast
+                </LinksRouter>
+                <LinksRouter
+                  onClick={() => dispatch({ type: 'reviews', payload: id })}
+                  to="reviews"
+                >
+                  Reviews
+                </LinksRouter>
+              </Box>
+            </ItemMovies>
+          </ListMoviesDetails>
+        </Box>
 
-      <Outlet />
-    </Box>
+        <Outlet />
+      </Box>
+    </>
   );
 };

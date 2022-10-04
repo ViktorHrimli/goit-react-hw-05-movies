@@ -6,11 +6,13 @@ const urlPage =
   'https://netsh.pp.ua/wp-content/uploads/2017/08/Placeholder-1.png';
 export const Home = ({ movie, onClick }) => {
   return (
-    <main>
-      <Box>
+    <Box as="main" display="flex" flexDirection="column" gridGap="20px">
+      <Box ml="auto">
         <ListLinkStyled>
           <LinksRouter to="/Movies">Movies</LinksRouter>
         </ListLinkStyled>
+      </Box>
+      <Box>
         <HomeRenderList>
           {movie.map(({ id, original_title, poster_path }) => (
             <HomeItemCard key={id}>
@@ -27,6 +29,6 @@ export const Home = ({ movie, onClick }) => {
           ))}
         </HomeRenderList>
       </Box>
-    </main>
+    </Box>
   );
 };
