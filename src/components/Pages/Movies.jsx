@@ -1,4 +1,6 @@
 import PropTypes from 'prop-types';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
@@ -16,6 +18,11 @@ export default function Movies({ onClick }) {
     return useQueryUrlParams;
   });
   const handleSubmit = ({ serchQuery }, { resetForm }) => {
+    if (serchQuery === '') {
+      return toast.error('Required field', {
+        theme: 'dark',
+      });
+    }
     setSerchParams(
       serchQuery !== '' ? { query: serchQuery.trim().toLowerCase() } : {}
     );
@@ -82,6 +89,7 @@ export default function Movies({ onClick }) {
                 </MoviesItemCard>
               ))}
           </MoviesRenderList>
+          <ToastContainer />
         </Box>
       </Box>
     </>

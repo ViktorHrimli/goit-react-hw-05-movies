@@ -45,11 +45,11 @@ export const App = () => {
           <Routes>
             <Route path="/" element={<Home onClick={handleClickIdMovies} />} />
             <Route
-              path="/Movies"
+              path="/movies"
               element={<Movies onClick={handleClickIdMovies} />}
             />
             <Route
-              path="Movies/:id"
+              path="movies/:id"
               element={
                 <MovieDetails idMovie={movieDatails} dispatch={dispatch} />
               }

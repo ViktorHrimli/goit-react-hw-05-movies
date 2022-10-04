@@ -28,7 +28,7 @@ export default function Home({ onClick }) {
           <LinksRouter to="/" state={{ from: location }}>
             Home
           </LinksRouter>
-          <LinksRouter to="/Movies" state={{ from: location }}>
+          <LinksRouter to="/movies" state={{ from: location }}>
             Movies
           </LinksRouter>
         </ListLinkStyled>
@@ -39,7 +39,7 @@ export default function Home({ onClick }) {
             <HomeItemCard key={id}>
               <Link
                 onClick={() => onClick(id)}
-                to={`Movies/${id}`}
+                to={`movies/${id}`}
                 state={{ from: location }}
               >
                 <img
