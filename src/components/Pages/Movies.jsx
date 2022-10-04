@@ -64,7 +64,11 @@ export default function Movies({ onClick }) {
             {serchMovies &&
               serchMovies.map(({ id, original_title, poster_path }) => (
                 <MoviesItemCard key={id}>
-                  <Link onClick={() => onClick(id)} to={`${id}`}>
+                  <Link
+                    onClick={() => onClick(id)}
+                    to={`${id}`}
+                    state={{ from: location }}
+                  >
                     <img
                       src={
                         !poster_path

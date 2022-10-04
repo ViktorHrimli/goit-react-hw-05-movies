@@ -32,10 +32,7 @@ export default function MovieDetails({ idMovie, dispatch }) {
   return (
     <>
       <Box mr="auto" display="flex" gridGap="20px">
-        <LinksRouterBack to={location.state?.from ?? '/Movies'}>
-          Back
-        </LinksRouterBack>
-        <LinksRouterBack to="/">Home</LinksRouterBack>
+        <LinksRouterBack to={location.state?.from ?? '/'}>Back</LinksRouterBack>
       </Box>
       <Box
         as="main"

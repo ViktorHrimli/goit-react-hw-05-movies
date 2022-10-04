@@ -37,7 +37,11 @@ export default function Home({ onClick }) {
         <HomeRenderList>
           {movies.map(({ id, original_title, poster_path }) => (
             <HomeItemCard key={id}>
-              <Link onClick={() => onClick(id)} to={`Movies/${id}`}>
+              <Link
+                onClick={() => onClick(id)}
+                to={`Movies/${id}`}
+                state={{ from: location }}
+              >
                 <img
                   src={
                     !poster_path
