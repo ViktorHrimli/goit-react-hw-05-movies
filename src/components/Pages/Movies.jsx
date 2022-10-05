@@ -17,6 +17,7 @@ export default function Movies({ onClick }) {
   const [query, setQuery] = useState(() => {
     return useQueryUrlParams;
   });
+
   const handleSubmit = ({ serchQuery }, { resetForm }) => {
     if (serchQuery === '') {
       return toast.error('Required field', {
@@ -37,16 +38,12 @@ export default function Movies({ onClick }) {
     });
   }, [query]);
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/movies';
+  const backLinkHref = location.state?.from;
   return (
     <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="flex-start"
-        mr="auto"
-      >
+      <Box mr="auto" display="flex" gridGap="20px">
         <LinksRouterBack to={backLinkHref}>Back</LinksRouterBack>
+        <LinksRouterBack to="/">Home</LinksRouterBack>
       </Box>
       <Box
         as="main"
@@ -70,11 +67,7 @@ export default function Movies({ onClick }) {
             {serchMovies &&
               serchMovies.map(({ id, original_title, poster_path }) => (
                 <MoviesItemCard key={id}>
-                  <Link
-                    onClick={() => onClick(id)}
-                    to={`${id}`}
-                    state={{ from: location }}
-                  >
+                  <Link onClick={() => onClick(id)} to={`${id}`}>
                     <img
                       src={
                         !poster_path

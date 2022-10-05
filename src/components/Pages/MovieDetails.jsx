@@ -29,11 +29,12 @@ export default function MovieDetails({ idMovie }) {
   } = dataMovie;
 
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkHref = location.state?.from ?? '/movies';
   return (
     <>
       <Box mr="auto" display="flex" gridGap="20px">
         <LinksRouterBack to={backLinkHref}>Back</LinksRouterBack>
+        <LinksRouterBack to="/">Home</LinksRouterBack>
       </Box>
       <Box
         as="main"
