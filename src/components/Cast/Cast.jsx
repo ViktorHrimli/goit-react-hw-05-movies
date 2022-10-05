@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Box } from 'CommonStyle/Common.styled';
 import { ApiServiseCastMovie } from '../Api/ServiceApi';
+import { useParams } from 'react-router-dom';
 const IMG = 'https://dummyimage.com/200x300/000/0011ff&text=Not+find+photo';
 
-export default function Cast({ page, id }) {
+export default function Cast() {
   const [castMovie, setcastMovie] = useState([]);
+  const hrefPageId = useParams('cast').id;
 
   useEffect(() => {
-    if (!id) return;
-    ApiServiseCastMovie(page, id).then(({ data }) => {
+    if (hrefPageId === '') return;
+    ApiServiseCastMovie('credits', hrefPageId).then(({ data }) => {
       setcastMovie(data);
     });
-  }, [id, page]);
+  }, [hrefPageId]);
+
   const { cast } = castMovie;
 
   if (!cast) return;
@@ -62,8 +64,3 @@ export default function Cast({ page, id }) {
     </>
   );
 }
-
-Cast.propTypes = {
-  page: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
-};

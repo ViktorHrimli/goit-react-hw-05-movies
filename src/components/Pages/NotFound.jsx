@@ -1,11 +1,7 @@
-import { LinksRouterBack } from 'CommonStyle/Common.styled';
+import { useNavigate } from 'react-router-dom';
 
 export const NotFound = () => {
-  return (
-    <main style={{ textAlign: 'center' }}>
-      <b style={{ fontSize: 64 }}>404</b>
-      <p>Sorry, we couldn't find that page :(</p>
-      <LinksRouterBack to="/">Home Page</LinksRouterBack>;
-    </main>
-  );
+  // const navigate = useNavigate();
+  // navigate('/', { replace: true });
+  return <h1 color="red">Erorre</h1>;
 };

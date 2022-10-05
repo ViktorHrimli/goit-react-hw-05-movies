@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ApiServiseMovieDetails } from '../Api/ServiceApi';
 import { Box, LinksRouter, LinksRouterBack } from 'CommonStyle/Common.styled';
@@ -7,17 +7,17 @@ import { ListMoviesDetails, ItemMovies } from './MovieDetails.styled';
 
 const IMG = 'https://dummyimage.com/300x450/000/0011ff&text=Not+find+photo';
 
-export default function MovieDetails({ idMovie, dispatch }) {
+export default function MovieDetails({ idMovie }) {
   const [dataMovie, setDataMovie] = useState([]);
-  const location = useLocation();
 
+  const getIdParams = useParams('id');
   useEffect(() => {
-    if (!idMovie) return;
-    ApiServiseMovieDetails(idMovie).then(({ data }) => {
+    if (!getIdParams.id) return;
+    ApiServiseMovieDetails(getIdParams.id).then(({ data }) => {
       setDataMovie(data);
     });
     return () => {};
-  }, [idMovie]);
+  }, [getIdParams]);
 
   const {
     original_title,
@@ -26,13 +26,14 @@ export default function MovieDetails({ idMovie, dispatch }) {
     release_date,
     overview,
     homepage,
-    id,
   } = dataMovie;
 
+  const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/';
   return (
     <>
       <Box mr="auto" display="flex" gridGap="20px">
-        <LinksRouterBack to={location.state?.from ?? '/'}>Back</LinksRouterBack>
+        <LinksRouterBack to={backLinkHref}>Back</LinksRouterBack>
       </Box>
       <Box
         as="main"
@@ -74,16 +75,14 @@ export default function MovieDetails({ idMovie, dispatch }) {
                 gridGap={20}
               >
                 <LinksRouter
-                  onClick={() => dispatch({ type: 'credits', payload: id })}
                   to="cast"
-                  state={{ from: location }}
+                  state={{ from: location, id: getIdParams }}
                 >
                   Cast
                 </LinksRouter>
                 <LinksRouter
-                  onClick={() => dispatch({ type: 'reviews', payload: id })}
                   to="reviews"
-                  state={{ from: location }}
+                  state={{ from: location, id: getIdParams }}
                 >
                   Reviews
                 </LinksRouter>
@@ -99,5 +98,4 @@ export default function MovieDetails({ idMovie, dispatch }) {
 
 MovieDetails.propTypes = {
   idMovie: PropTypes.number.isRequired,
-  dispatch: PropTypes.func.isRequired,
 };

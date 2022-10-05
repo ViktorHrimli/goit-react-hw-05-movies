@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { useReducer, useState, lazy, Suspense } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { Box } from 'CommonStyle/Common.styled';
 import { NotFound } from './Pages/NotFound';
 
@@ -9,23 +9,8 @@ const MovieDetails = lazy(() => import('./Pages/MovieDetails'));
 const Cast = lazy(() => import('./Cast/Cast'));
 const Reviews = lazy(() => import('./Reviews/Reviews'));
 
-function CastReviewReducer(state, action) {
-  switch (action.type) {
-    case 'credits':
-      return { page: action.type, id: action.payload };
-    case 'reviews':
-      return { page: action.type, id: action.payload };
-    default:
-      return state;
-  }
-}
-
 export const App = () => {
-  const [movieDatails, setMovieDateils] = useState(null);
-  const [{ page, id }, dispatch] = useReducer(CastReviewReducer, {
-    page: '',
-    id: null,
-  });
+  const [movieDatails, setMovieDateils] = useState('');
 
   const handleClickIdMovies = e => {
     setMovieDateils(e);
@@ -50,12 +35,10 @@ export const App = () => {
             />
             <Route
               path="movies/:id"
-              element={
-                <MovieDetails idMovie={movieDatails} dispatch={dispatch} />
-              }
+              element={<MovieDetails idMovie={movieDatails} />}
             >
-              <Route path="cast" element={<Cast page={page} id={id} />} />
-              <Route path="reviews" element={<Reviews page={page} id={id} />} />
+              <Route path="cast" element={<Cast />} />
+              <Route path="reviews" element={<Reviews />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>

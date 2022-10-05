@@ -37,6 +37,7 @@ export default function Movies({ onClick }) {
     });
   }, [query]);
   const location = useLocation();
+  const backLinkHref = location.state?.from ?? '/movies';
   return (
     <>
       <Box
@@ -45,9 +46,7 @@ export default function Movies({ onClick }) {
         alignItems="flex-start"
         mr="auto"
       >
-        <LinksRouterBack to="/" state={{ from: location }}>
-          Back
-        </LinksRouterBack>
+        <LinksRouterBack to={backLinkHref}>Back</LinksRouterBack>
       </Box>
       <Box
         as="main"

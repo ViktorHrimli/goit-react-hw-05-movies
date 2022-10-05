@@ -9,28 +9,23 @@ import { ApiServiseTrand } from '../Api/ServiceApi';
 const IMG = 'https://dummyimage.com/400x600/000/0011ff&text=Not+find+photo';
 
 export default function Home({ onClick }) {
-  const [movies, setmovies] = useState([]);
   const location = useLocation();
-
+  const [movies, setmovies] = useState([]);
   useEffect(() => {
     ApiServiseTrand().then(({ data: { results } }) => {
       setmovies(results);
     });
+
     return () => {
       setmovies([]);
     };
   }, []);
-
   return (
     <Box as="main" display="flex" flexDirection="column" gridGap="20px">
       <Box ml="auto">
         <ListLinkStyled>
-          <LinksRouter to="/" state={{ from: location }}>
-            Home
-          </LinksRouter>
-          <LinksRouter to="/movies" state={{ from: location }}>
-            Movies
-          </LinksRouter>
+          <LinksRouter to="/">Home</LinksRouter>
+          <LinksRouter to="/movies">Movies</LinksRouter>
         </ListLinkStyled>
       </Box>
       <Box>

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 const KEY = '4568c047ac29c58c34b8c5ba81189d61';
 const URL = 'https://api.themoviedb.org/3/';
 
-export const ApiServiseTrand = async (query, page) => {
+export const ApiServiseTrand = async () => {
   return await axios
     .get(`${URL}trending/movie/week?api_key=${KEY}`)
     .then(res => {
@@ -51,7 +51,13 @@ export const ApiServiceSerchMovie = async query => {
     });
 };
 
-ApiServiseTrand.propTypes = {
-  query: PropTypes.string.isRequired,
+ApiServiseMovieDetails.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+ApiServiseCastMovie.propTypes = {
   page: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
+ApiServiceSerchMovie.propTypes = {
+  query: PropTypes.string.isRequired,
 };
