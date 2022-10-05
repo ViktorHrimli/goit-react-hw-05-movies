@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ApiServiseMovieDetails } from '../Api/ServiceApi';
@@ -7,7 +6,7 @@ import { ListMoviesDetails, ItemMovies } from './MovieDetails.styled';
 
 const IMG = 'https://dummyimage.com/300x450/000/0011ff&text=Not+find+photo';
 
-export default function MovieDetails({ idMovie }) {
+export default function MovieDetails() {
   const [dataMovie, setDataMovie] = useState([]);
 
   const getIdParams = useParams('id');
@@ -96,7 +95,3 @@ export default function MovieDetails({ idMovie }) {
     </>
   );
 }
-
-MovieDetails.propTypes = {
-  idMovie: PropTypes.number.isRequired,
-};

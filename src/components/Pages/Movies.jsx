@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useSearchParams, useLocation } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { ApiServiceSerchMovie } from '../Api/ServiceApi';
 
 const IMG = 'https://dummyimage.com/400x600/000/0011ff&text=Not+find+photo';
 
-export default function Movies({ onClick }) {
+export default function Movies() {
   const [serchMovies, setserchMovies] = useState([]);
   const [serchParams, setSerchParams] = useSearchParams();
   const useQueryUrlParams = serchParams.get('query') ?? '';
@@ -67,7 +66,7 @@ export default function Movies({ onClick }) {
             {serchMovies &&
               serchMovies.map(({ id, original_title, poster_path }) => (
                 <MoviesItemCard key={id}>
-                  <Link onClick={() => onClick(id)} to={`${id}`}>
+                  <Link to={`${id}`} state={{ form: location }}>
                     <img
                       src={
                         !poster_path
@@ -87,7 +86,3 @@ export default function Movies({ onClick }) {
     </>
   );
 }
-
-Movies.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
