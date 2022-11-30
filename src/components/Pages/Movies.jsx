@@ -1,11 +1,12 @@
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link, useSearchParams, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Formik, Form } from 'formik';
+import { useQuery } from 'react-query';
+import { useState } from 'react';
 import { Box, LinksRouterBack } from 'CommonStyle/Common.styled';
-import { Input, MoviesItemCard, MoviesRenderList } from './Movies.styled';
+import { MoviesItemCard, MoviesRenderList } from './Movies.styled';
 import { ApiServiceSerchMovie } from '../Api/ServiceApi';
+import SerchForm from 'components/Form/Form';
 
 const IMG = 'https://dummyimage.com/400x600/000/0011ff&text=Not+find+photo';
 
@@ -17,25 +18,21 @@ export default function Movies() {
     return useQueryUrlParams;
   });
 
-  const handleSubmit = ({ serchQuery }, { resetForm }) => {
-    if (serchQuery === '') {
-      return toast.error('Required field', {
-        theme: 'dark',
-      });
+  const { error } = useQuery(
+    ['get querys', query],
+    () => ApiServiceSerchMovie(query),
+    {
+      onSuccess: response => {
+        setserchMovies(response?.data?.results);
+      },
     }
-    setSerchParams(
-      serchQuery !== '' ? { query: serchQuery.trim().toLowerCase() } : {}
-    );
-    setQuery(serchQuery.trim().toLowerCase());
-    resetForm();
+  );
+
+  const handleSubmit = query => {
+    setSerchParams(query !== '' ? { query: query } : {});
+    setQuery(query);
   };
 
-  useEffect(() => {
-    if (query.length === 0) return;
-    ApiServiceSerchMovie(query).then(({ data: { results } }) => {
-      setserchMovies(results);
-    });
-  }, [query]);
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
   return (
@@ -52,16 +49,14 @@ export default function Movies() {
         gridGap="20px"
       >
         <h1>Movies</h1>
-        <Formik
-          initialValues={{ serchQuery: useQueryUrlParams }}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <Input type="text" name="serchQuery" />
-          </Form>
-        </Formik>
+        <SerchForm submit={handleSubmit} />
         <Box>
           <MoviesRenderList>
+            {error &&
+              toast.error(error.message, {
+                theme: 'dark',
+              })}
+
             {serchMovies &&
               serchMovies.map(({ id, original_title, poster_path }) => (
                 <MoviesItemCard key={id}>
@@ -79,6 +74,7 @@ export default function Movies() {
                 </MoviesItemCard>
               ))}
           </MoviesRenderList>
+
           <ToastContainer />
         </Box>
       </Box>

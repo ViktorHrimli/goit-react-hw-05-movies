@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { Field } from 'formik';
 
-export const Input = styled(Field)`
+export const Input = styled.input`
   position: relative;
   width: ${p => p.theme.space[8]}px;
   padding: ${p => p.theme.space[2]}px;
