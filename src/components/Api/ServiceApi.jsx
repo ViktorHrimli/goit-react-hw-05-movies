@@ -39,6 +39,9 @@ export const ApiServiseCastMovie = async (page, id) => {
 };
 
 export const ApiServiceSerchMovie = async query => {
+  if (query === '') {
+    return;
+  }
   return await axios
     .get(
       `${URL}search/movie?api_key=${KEY}&language=en-US&query=${query}&page=1&include_adult=false`
